@@ -1,0 +1,34 @@
+[
+  {
+    "authors": [
+      {
+        "name": "NASA",
+        "socials": null
+      }
+    ],
+    "category": "Spaceflight News",
+    "id": "space_art_38206",
+    "image_url": "https://images-assets.nasa.gov/image/KSC-20260421-PH-KLS01_0041/KSC-20260421-PH-KLS01_0041~large.jpg",
+    "news_site": "NASA",
+    "published_at": "2026-06-02T14:31:18Z",
+    "summary": "A mobile wastewater treatment system built at NASA’s Kennedy Space Center in Florida that can help prepare for long-duration missions on the Moon and Mars departed the spaceport and arrived at the University of North Dakota in Grand Forks. Graduate students at the university will test the technology under conditions designed to closely mimic the […]",
+    "title": "NASA Testing Wastewater Treatment Facility for Future Moon Base",
+    "url": "https://www.nasa.gov/centers-and-facilities/kennedy/nasa-testing-wastewater-treatment-facility-for-future-moon-base/"
+  },
+  {
+    "authors": [
+      {
+        "name": "NASA",
+        "socials": null
+      }
+    ],
+    "category": "Spaceflight News",
+    "id": "space_art_38235",
+    "image_url": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/msl/2026/curiosity-rover-updates/may/https___mars.nasa.gov_msl-raw-images_msss_04908_mhli_4908MH0003260001801155C00_DXXX.jpg",
+    "news_site": "NASA",
+    "published_at": "2026-06-04T01:28:11Z",
+    "summary": "By Susanne P. Schwenzer, Professor of Planetary Mineralogy at The Open University, UK Earth planning date: Friday, May 29, 2026 Drilling always keeps the rover in place for a little while, and our 47th successful drill, “Campo Marte,” was no exception. The team used the time wisely and on top of the drilling, we also […]",
+    "title": "Curiosity Blog, Sols 4908-4912: Goodbye Campo Marte, It’s Been Fun!",
+    "url": "https://science.nasa.gov/blog/curiosity-blog-sols-4908-4912-goodbye-campo-marte-its-been-fun/"
+  }
+]

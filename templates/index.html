@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GingerNest | Premium Editorial Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            950: '#090a0f',
+                        },
+                        brand: {
+                            50: '#f8fafc',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        },
+                        cardBg: {
+                            light: '#ffffff',
+                            dark: '#111219'
+                        }
+                    },
+fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        serif: ['Lora', 'Georgia', 'ui-serif', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        .dark ::-webkit-scrollbar-thumb { background: #1e2030; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        .card-enter { opacity: 0; transform: translateY(16px); }
+        .card-enter-active { animation: fadeInUp 0.5s ease-out forwards; }
+
+        .btn-scale:active { transform: scale(0.94); }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(16px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .skeleton-shimmer {
+            background: linear-gradient(90deg, transparent 0%, rgba(148,163,184,0.08) 50%, transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.8s infinite linear;
+        }
+        .dark .skeleton-shimmer {
+            background: linear-gradient(90deg, transparent 0%, rgba(148,163,184,0.06) 50%, transparent 100%);
+            background-size: 200% 100%;
+        }
+
+        .shimmer-bg {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.8s infinite linear;
+        }
+        .dark .shimmer-bg {
+            background: linear-gradient(90deg, #0f1119 25%, #1a1d2e 50%, #0f1119 75%);
+            background-size: 200% 100%;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px) saturate(1.8);
+            -webkit-backdrop-filter: blur(20px) saturate(1.8);
+        }
+        .dark .glass {
+            background: rgba(9, 10, 15, 0.78);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-card {
+            background: rgba(17, 18, 25, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .header-shadow {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .dark .header-shadow {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .header-shadow-scrolled {
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        }
+        .dark .header-shadow-scrolled {
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        .card-glow {
+            transition: box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.35s ease;
+        }
+        .card-glow:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .dark .card-glow:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(59,130,246,0.08);
+        }
+
+        .img-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+        }
+
+        .cat-indicator {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .modal-backdrop {
+            background: rgba(9, 10, 15, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.25s ease;
+        }
+
+        .scroll-btn {
+            opacity: 0;
+            transform: translateY(16px);
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .scroll-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .focus-ring:focus-visible {
+            outline: none;
+            ring: 2px solid #3b82f6;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-[#f8f9fc] text-slate-800 dark:bg-slate-950 dark:text-slate-200 min-h-screen flex flex-col selection:bg-brand-500/12 selection:text-brand-500">
+
+    <!-- Scroll-to-top button -->
+    <button id="btn-scroll-top" class="scroll-btn fixed bottom-6 right-6 z-40 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/60 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 shadow-lg hover:shadow-xl transition-all btn-scale" title="Scroll to top">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"></path>
+        </svg>
+    </button>
+
+    <!-- Top Navigation -->
+    <header id="main-header" class="sticky top-0 z-40 glass border-b border-slate-200/50 dark:border-slate-900/50 header-shadow transition-shadow duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-1.5 h-5 bg-gradient-to-b from-brand-500 to-brand-600 rounded-full"></div>
+                <div>
+                    <h1 class="text-xs font-bold tracking-[0.15em] text-slate-900 dark:text-white uppercase font-sans">
+                        GingerNest
+                    </h1>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-1.5">
+                <button id="btn-refresh" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-900/60 rounded-lg transition-colors text-slate-500 dark:text-slate-400 btn-scale" title="Fetch Fresh Feeds">
+                    <svg id="refresh-icon" class="w-4 h-4 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+                    </svg>
+                </button>
+
+                <button id="btn-theme-toggle" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-900/60 rounded-lg transition-colors text-slate-500 dark:text-slate-400 btn-scale" title="Toggle Appearance">
+                    <svg id="theme-sun" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <svg id="theme-moon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path>
+                    </svg>
+                </button>
+
+                <div class="h-4 w-[1px] bg-slate-200 dark:bg-slate-800 mx-1"></div>
+
+                <button id="btn-fav-toggle" class="px-2.5 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-900/60 text-slate-600 dark:text-slate-300 rounded-lg transition-colors text-xs font-semibold flex items-center space-x-1.5 btn-scale">
+                    <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                    <span class="font-sans">Bookmarks</span>
+                    <span id="fav-count" class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] px-1.5 py-0.5 rounded-md ml-1 font-bold tabular-nums">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col">
+
+        <!-- Editorial Header -->
+        <div class="border-b border-slate-200/50 dark:border-slate-900/50 pb-5 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <p id="live-date" class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500 font-sans"></p>
+                <h2 class="text-3xl font-serif font-medium tracking-tight text-slate-900 dark:text-white mt-1">
+                    The Daily Roast
+                </h2>
+            </div>
+
+            <div class="flex items-center space-x-4 text-xs text-slate-400 dark:text-slate-500 font-sans">
+                <div class="flex items-center space-x-1">
+                    <span class="font-semibold text-slate-700 dark:text-slate-300 tabular-nums" id="stat-total">0</span>
+                    <span>articles</span>
+                </div>
+                <span class="text-slate-200 dark:text-slate-800">|</span>
+                <div class="flex items-center space-x-1">
+                    <span class="font-semibold text-slate-700 dark:text-slate-300 tabular-nums" id="stat-sources">0</span>
+                    <span>publishers</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter bar & Layout Controls -->
+        <div class="mb-6 space-y-4">
+            <!-- Channel Navigation Tabs -->
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/30 dark:border-slate-900/30 pb-0.5">
+                <div class="flex flex-wrap -mb-px gap-x-0.5 overflow-x-auto scrollbar-none" id="category-filters">
+                    <button data-cat="all" class="cat-pill active px-3 py-2 text-xs font-semibold rounded-t-lg border-b-2 border-brand-500 text-brand-600 dark:text-brand-400 flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"></path>
+                        </svg>
+                        All Feeds
+                    </button>
+                    <button data-cat="space_articles" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
+                        </svg>
+                        Space
+                    </button>
+                    <button data-cat="space_blogs" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
+                        </svg>
+                        Space Blogs
+                    </button>
+                    <button data-cat="tech" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"></path>
+                        </svg>
+                        Technology
+                    </button>
+                    <button data-cat="science" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v1.244c0 .59-.224 1.157-.63 1.605L5.448 10.16a6.721 6.721 0 00-.773 8.358A6.743 6.743 0 0010.5 21.75h3a6.743 6.743 0 005.825-3.232 6.721 6.721 0 00-.773-8.358L14.88 5.953a2.38 2.38 0 01-.63-1.605V3.104m-4.5 0h4.5m-4.5 0A.75.75 0 0110.5 2.25h3a.75.75 0 01.75.75m-4.5 0A.75.75 0 0010.5 2.25h3a.75.75 0 01.75.75M9 15h6M9 12h6"></path>
+                        </svg>
+                        Science
+                    </button>
+                    <button data-cat="ai_research" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"></path>
+                        </svg>
+                        AI & Research
+                    </button>
+                    <button data-cat="business" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"></path>
+                        </svg>
+                        Business
+                    </button>
+                    <button data-cat="crypto" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Crypto
+                    </button>
+                    <button data-cat="forex" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125V9M5.25 12h6M5.25 15h6M5.25 18h6"></path>
+                        </svg>
+                        Forex
+                    </button>
+                    <button data-cat="africa" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.88l1.098.99c1.078.97 1.275 2.561.435 3.728a2.475 2.475 0 01-1.718 1.112l-1.315.145a2.007 2.007 0 00-1.693 1.365c-.309.984-.136 2.035.44 2.849l.691.982m0 0H10.61m2.377 0A6.05 6.05 0 0014.43 18.2l1.422 1.422M10.61 18.8L9.5 19.904a.75.75 0 01-1.06 0l-1.06-1.06a2.25 2.25 0 01-.21-2.972l.596-.787a2.25 2.25 0 01.612-.659l.688-.484a2.25 2.25 0 00.717-1.028l.264-.79a1.5 1.5 0 01.88-.998 1.5 1.5 0 011.437.126l.432.293a1.5 1.5 0 01.565 1.288v.738a.75.75 0 01-.22.53l-.97.97a.75.75 0 000 1.06zm-4.5-9.75h.008v.007H9.5V9h.008z"></path>
+                        </svg>
+                        Africa
+                    </button>
+                    <button data-cat="world" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-.778.099-1.533.284-2.253"></path>
+                        </svg>
+                        World News
+                    </button>
+                    <button data-cat="bookmarks" class="cat-pill px-3 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors whitespace-nowrap flex-shrink-0">
+                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"></path>
+                        </svg>
+                        Bookmarks
+                    </button>
+                </div>
+
+                <div class="flex items-center space-x-1.5">
+                    <button id="view-grid" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-brand-500 dark:text-brand-400 transition-all btn-scale" title="Grid View">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+                            <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+                            <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+                            <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+                        </svg>
+                    </button>
+                    <button id="view-list" class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-400 transition-all btn-scale" title="Compact List View">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3.5">
+                <div class="relative md:col-span-2">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400 dark:text-slate-600">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.602 10.602z"></path>
+                        </svg>
+                    </span>
+                    <input type="text" id="search-input" placeholder="Search headlines, keywords or sites..." class="w-full pl-9 pr-8 py-2 bg-white dark:bg-[#111219] border border-slate-200 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/15 focus:border-brand-500/30 dark:focus:border-brand-500/30 transition-all text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 text-xs font-sans">
+                    <button id="search-clear" class="hidden absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="relative">
+                    <select id="source-filter" class="w-full px-3 py-2 bg-white dark:bg-[#111219] border border-slate-200 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/15 focus:border-brand-500/30 dark:focus:border-brand-500/30 transition-all text-slate-600 dark:text-slate-400 text-xs appearance-none font-sans cursor-pointer">
+                        <option value="all">All Publishers</option>
+                    </select>
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+                        </svg>
+                    </span>
+                </div>
+
+                <div class="relative">
+                    <select id="sort-select" class="w-full px-3 py-2 bg-white dark:bg-[#111219] border border-slate-200 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:focus:ring-brand-500/15 focus:border-brand-500/30 dark:focus:border-brand-500/30 transition-all text-slate-600 dark:text-slate-400 text-xs appearance-none font-sans cursor-pointer">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="alphabetical">Title (A-Z)</option>
+                    </select>
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Portal Content -->
+        <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 min-h-[400px]">
+            <!-- Skeleton Loading Grid Items -->
+            <div class="bg-white dark:bg-[#111219] rounded-xl border border-slate-200/40 dark:border-slate-900/40 overflow-hidden">
+                <div class="aspect-video shimmer-bg"></div>
+                <div class="p-4 space-y-3">
+                    <div class="flex justify-between">
+                        <div class="h-2.5 w-20 shimmer-bg rounded"></div>
+                        <div class="h-2.5 w-12 shimmer-bg rounded"></div>
+                    </div>
+                    <div class="h-4 w-full shimmer-bg rounded"></div>
+                    <div class="h-4 w-5/6 shimmer-bg rounded"></div>
+                    <div class="h-3 w-full shimmer-bg rounded"></div>
+                    <div class="h-3 w-3/4 shimmer-bg rounded"></div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-[#111219] rounded-xl border border-slate-200/40 dark:border-slate-900/40 overflow-hidden">
+                <div class="aspect-video shimmer-bg"></div>
+                <div class="p-4 space-y-3">
+                    <div class="flex justify-between">
+                        <div class="h-2.5 w-24 shimmer-bg rounded"></div>
+                        <div class="h-2.5 w-10 shimmer-bg rounded"></div>
+                    </div>
+                    <div class="h-4 w-full shimmer-bg rounded"></div>
+                    <div class="h-4 w-4/5 shimmer-bg rounded"></div>
+                    <div class="h-3 w-full shimmer-bg rounded"></div>
+                    <div class="h-3 w-2/3 shimmer-bg rounded"></div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-[#111219] rounded-xl border border-slate-200/40 dark:border-slate-900/40 overflow-hidden">
+                <div class="aspect-video shimmer-bg"></div>
+                <div class="p-4 space-y-3">
+                    <div class="flex justify-between">
+                        <div class="h-2.5 w-16 shimmer-bg rounded"></div>
+                        <div class="h-2.5 w-14 shimmer-bg rounded"></div>
+                    </div>
+                    <div class="h-4 w-full shimmer-bg rounded"></div>
+                    <div class="h-4 w-3/4 shimmer-bg rounded"></div>
+                    <div class="h-3 w-full shimmer-bg rounded"></div>
+                    <div class="h-3 w-5/6 shimmer-bg rounded"></div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-[#111219] rounded-xl border border-slate-200/40 dark:border-slate-900/40 overflow-hidden">
+                <div class="aspect-video shimmer-bg"></div>
+                <div class="p-4 space-y-3">
+                    <div class="flex justify-between">
+                        <div class="h-2.5 w-22 shimmer-bg rounded"></div>
+                        <div class="h-2.5 w-11 shimmer-bg rounded"></div>
+                    </div>
+                    <div class="h-4 w-full shimmer-bg rounded"></div>
+                    <div class="h-4 w-5/6 shimmer-bg rounded"></div>
+                    <div class="h-3 w-full shimmer-bg rounded"></div>
+                    <div class="h-3 w-4/5 shimmer-bg rounded"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results state -->
+        <div id="no-results" class="hidden flex-col items-center justify-center py-20 text-center flex-grow">
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl text-slate-400 mb-3 border border-slate-200/40 dark:border-slate-800/40">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"></path>
+                </svg>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 font-sans">No matching articles</h3>
+            <p class="text-xs text-slate-400 mt-1 max-w-xs font-sans">
+                Refine your keyword, switch channels, or clear active source filters.
+            </p>
+        </div>
+    </main>
+
+    <!-- Professional Modal -->
+    <div id="modal-article" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white dark:bg-[#111219] rounded-2xl overflow-hidden max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200/60 dark:border-slate-900/60 modal-content scale-95 opacity-0" id="modal-content">
+            <div class="px-5 py-3.5 border-b border-slate-100 dark:border-slate-900 flex justify-between items-center bg-slate-50/40 dark:bg-slate-950/30">
+                <span id="modal-site" class="text-[10px] font-bold tracking-[0.15em] uppercase text-slate-400 dark:text-slate-500 font-sans"></span>
+                <button id="modal-close" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-900 rounded-lg transition-colors text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 btn-scale">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="p-5 overflow-y-auto space-y-4">
+                <div class="relative w-full h-44 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900 flex-shrink-0 border border-slate-200/30 dark:border-slate-800/30">
+                    <img id="modal-image" src="" alt="" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=600&q=80';this.onerror=null;">
+                    <div class="absolute inset-0 img-overlay"></div>
+                    <span id="modal-category" class="absolute bottom-3 left-3 text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 bg-brand-500 text-white rounded-md font-sans"></span>
+                </div>
+
+                <div class="space-y-1.5">
+                    <p id="modal-date" class="text-[10px] text-slate-400 dark:text-slate-500 font-medium font-sans"></p>
+                    <h3 id="modal-title" class="text-lg font-serif font-bold text-slate-900 dark:text-white leading-snug"></h3>
+                    <div id="modal-authors-container" class="text-[10px] text-brand-500 font-medium font-sans">
+                        By <span id="modal-authors"></span>
+                    </div>
+                </div>
+
+                <div class="h-[1px] bg-slate-100 dark:bg-slate-900"></div>
+
+                <p id="modal-summary" class="text-slate-600 dark:text-slate-300 text-xs leading-relaxed font-normal"></p>
+            </div>
+
+            <div class="px-5 py-3.5 border-t border-slate-100 dark:border-slate-900 flex items-center justify-between bg-slate-50/40 dark:bg-slate-950/30 font-sans">
+                <button id="modal-btn-fav" class="flex items-center space-x-1.5 text-xs font-semibold text-slate-500 hover:text-amber-500 dark:text-slate-400 dark:hover:text-amber-500 transition-colors btn-scale">
+                    <svg id="modal-fav-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"></path>
+                    </svg>
+                    <span id="modal-fav-text">Bookmark</span>
+                </button>
+
+                <div class="flex items-center space-x-2">
+                    <button id="modal-btn-share" class="px-3 py-1.5 hover:bg-slate-200 dark:hover:bg-slate-900 rounded-lg text-[11px] font-semibold text-slate-600 dark:text-slate-400 transition-colors btn-scale">
+                        Copy Link
+                    </button>
+                    <a id="modal-btn-visit" href="" target="_blank" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-950 rounded-lg text-[11px] font-semibold transition-colors flex items-center space-x-1 btn-scale">
+                        <span>Read Publisher</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-20 right-6 z-50 flex flex-col space-y-2 font-sans pointer-events-none"></div>
+
+    <!-- Editorial Footer -->
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200/50 dark:border-slate-900/50 py-5 mt-auto transition-colors font-sans">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] text-slate-400 dark:text-slate-600">
+            <p>&copy; 2026 GingerNest Editorial Engine. Powered by public free APIs.</p>
+            <div class="flex flex-wrap gap-x-2 gap-y-1 justify-center">
+                <span>Spaceflight News</span>
+                <span>&bull;</span>
+                <span>NASA</span>
+                <span>&bull;</span>
+                <span>HN</span>
+                <span>&bull;</span>
+                <span>arXiv AI</span>
+                <span>&bull;</span>
+                <span>TechCrunch</span>
+                <span>&bull;</span>
+                <span>BBC</span>
+                <span>&bull;</span>
+                <span>The Verge</span>
+                <span>&bull;</span>
+                <span>Wired</span>
+                <span>&bull;</span>
+                <span>ScienceDaily</span>
+                <span>&bull;</span>
+                <span>CNBC</span>
+                <span>&bull;</span>
+                <span>Bloomberg</span>
+                <span>&bull;</span>
+                <span>Yahoo Finance</span>
+                <span>&bull;</span>
+                <span>CoinDesk</span>
+                <span>&bull;</span>
+                <span>CoinTelegraph</span>
+                <span>&bull;</span>
+                <span>Decrypt</span>
+                <span>&bull;</span>
+                <span>Investing.com</span>
+                <span>&bull;</span>
+                <span>The Guardian</span>
+                <span>&bull;</span>
+                <span>NPR</span>
+                <span>&bull;</span>
+                <span>Reddit</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let allArticles = [];
+        let bookmarkedIds = new Set();
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let selectedSource = 'all';
+        let currentSort = 'newest';
+        let currentView = 'grid';
+
+        const newsGrid = document.getElementById('news-grid');
+        const noResults = document.getElementById('no-results');
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+        const sourceFilter = document.getElementById('source-filter');
+        const categoryFilters = document.getElementById('category-filters');
+        const sortSelect = document.getElementById('sort-select');
+        const btnRefresh = document.getElementById('btn-refresh');
+        const refreshIcon = document.getElementById('refresh-icon');
+        const btnThemeToggle = document.getElementById('btn-theme-toggle');
+        const btnFavToggle = document.getElementById('btn-fav-toggle');
+        const favCountBadge = document.getElementById('fav-count');
+        const statTotal = document.getElementById('stat-total');
+        const statSources = document.getElementById('stat-sources');
+        const viewGridBtn = document.getElementById('view-grid');
+        const viewListBtn = document.getElementById('view-list');
+        const header = document.getElementById('main-header');
+        const scrollTopBtn = document.getElementById('btn-scroll-top');
+
+        const modal = document.getElementById('modal-article');
+        const modalContent = document.getElementById('modal-content');
+        const modalClose = document.getElementById('modal-close');
+        const modalImage = document.getElementById('modal-image');
+        const modalCategory = document.getElementById('modal-category');
+        const modalSite = document.getElementById('modal-site');
+        const modalDate = document.getElementById('modal-date');
+        const modalTitle = document.getElementById('modal-title');
+        const modalAuthors = document.getElementById('modal-authors');
+        const modalAuthorsContainer = document.getElementById('modal-authors-container');
+        const modalSummary = document.getElementById('modal-summary');
+        const modalBtnFav = document.getElementById('modal-btn-fav');
+        const modalFavIcon = document.getElementById('modal-fav-icon');
+        const modalFavText = document.getElementById('modal-fav-text');
+        const modalBtnShare = document.getElementById('modal-btn-share');
+        const modalBtnVisit = document.getElementById('modal-btn-visit');
+
+        let activeModalArticle = null;
+
+        async function init() {
+            if (localStorage.getItem('theme') === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+
+            if (localStorage.getItem('view_mode') === 'list') {
+                setView('list');
+            } else {
+                setView('grid');
+            }
+
+            updateHeaderDate();
+            await loadFavorites();
+            await fetchNews(false);
+            setupEventListeners();
+            setupScrollListener();
+        }
+
+        function updateHeaderDate() {
+            const dateSpan = document.getElementById('live-date');
+            if (dateSpan) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateSpan.textContent = new Date().toLocaleDateString('en-US', options);
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            toast.className = `pointer-events-auto border ${
+                type === 'error' 
+                    ? 'border-red-500/30 bg-red-500/10 text-red-500' 
+                    : 'border-slate-200/60 dark:border-slate-800/60 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100'
+            } px-3.5 py-2.5 rounded-xl shadow-lg flex items-center space-x-2 text-[11px] font-semibold transform translate-y-3 opacity-0 transition-all duration-400`;
+            
+            toast.innerHTML = `<span>${message}</span>`;
+            container.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-3', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-3', 'opacity-0');
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        function setView(view) {
+            currentView = view;
+            localStorage.setItem('view_mode', view);
+            if (view === 'grid') {
+                viewGridBtn.classList.add('bg-slate-100', 'dark:bg-slate-900', 'text-brand-500', 'dark:text-brand-400');
+                viewGridBtn.classList.remove('text-slate-400');
+                viewListBtn.classList.remove('bg-slate-100', 'dark:bg-slate-900', 'text-brand-500', 'dark:text-brand-400');
+                viewListBtn.classList.add('text-slate-400');
+                newsGrid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 min-h-[400px]";
+            } else {
+                viewListBtn.classList.add('bg-slate-100', 'dark:bg-slate-900', 'text-brand-500', 'dark:text-brand-400');
+                viewListBtn.classList.remove('text-slate-400');
+                viewGridBtn.classList.remove('bg-slate-100', 'dark:bg-slate-900', 'text-brand-500', 'dark:text-brand-400');
+                viewGridBtn.classList.add('text-slate-400');
+                newsGrid.className = "flex flex-col space-y-3.5 min-h-[400px]";
+            }
+            renderArticles();
+        }
+
+        async function loadFavorites() {
+            try {
+                const res = await fetch('/api/favorites');
+                if (res.ok) {
+                    const data = await res.json();
+                    bookmarkedIds = new Set(data.map(item => item.id));
+                    updateFavBadge();
+                }
+            } catch (err) {
+                console.error("Favorites error:", err);
+            }
+        }
+
+        function updateFavBadge() {
+            favCountBadge.textContent = bookmarkedIds.size;
+        }
+
+        async function fetchNews(force = false) {
+            try {
+                newsGrid.innerHTML = Array(4).fill(0).map(() => `
+                    <div class="bg-white dark:bg-[#111219] rounded-xl border border-slate-200/40 dark:border-slate-900/40 overflow-hidden">
+                        <div class="aspect-video shimmer-bg"></div>
+                        <div class="p-4 space-y-3">
+                            <div class="flex justify-between">
+                                <div class="h-2.5 w-20 shimmer-bg rounded"></div>
+                                <div class="h-2.5 w-12 shimmer-bg rounded"></div>
+                            </div>
+                            <div class="h-4 w-full shimmer-bg rounded"></div>
+                            <div class="h-4 w-5/6 shimmer-bg rounded"></div>
+                            <div class="h-3 w-full shimmer-bg rounded"></div>
+                            <div class="h-3 w-3/4 shimmer-bg rounded"></div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                noResults.classList.add('hidden');
+                
+                if (force) {
+                    refreshIcon.classList.add('animate-spin');
+                    document.documentElement.style.setProperty('--spin-duration', '600ms');
+                }
+
+                const res = await fetch(`/api/news?force_refresh=${force}`);
+                if (!res.ok) throw new Error();
+                
+                allArticles = await res.json();
+
+                statTotal.textContent = allArticles.length;
+                const sources = new Set(allArticles.map(a => a.news_site));
+                statSources.textContent = sources.size;
+
+                populateSources(sources);
+                renderArticles();
+                
+                if (force) showToast("Feeds refreshed and synchronized.");
+            } catch (err) {
+                console.error(err);
+                showToast("Connection issue. Loaded fallback news feeds.", "error");
+                newsGrid.innerHTML = '';
+                noResults.classList.remove('hidden');
+            } finally {
+                refreshIcon.classList.remove('animate-spin');
+            }
+        }
+
+        function populateSources(sources) {
+            const current = sourceFilter.value;
+            sourceFilter.innerHTML = '<option value="all">All Publishers</option>';
+            Array.from(sources).sort().forEach(src => {
+                const opt = document.createElement('option');
+                opt.value = src;
+                opt.textContent = src;
+                sourceFilter.appendChild(opt);
+            });
+            sourceFilter.value = current;
+        }
+
+        function formatRelativeTime(dateStr) {
+            if (!dateStr) return "Just now";
+            try {
+                const date = new Date(dateStr);
+                if (isNaN(date.getTime())) return "Recently";
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMins / 60);
+                const diffDays = Math.floor(diffHours / 24);
+
+                if (diffMins < 1) return "Just now";
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                
+                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function getCategoryLabel(cat) {
+            const norm = cat.toLowerCase();
+            if (norm.includes('spaceflight news')) return 'Space';
+            if (norm.includes('space blogs')) return 'Space Blogs';
+            if (norm.includes('technology')) return 'Technology';
+            if (norm.includes('science')) return 'Science';
+            if (norm.includes('ai & research')) return 'AI & Research';
+            if (norm.includes('business')) return 'Business';
+            if (norm.includes('crypto')) return 'Crypto';
+            if (norm.includes('forex')) return 'Forex';
+            if (norm.includes('africa')) return 'Africa';
+            return 'World News';
+        }
+
+        function renderArticles() {
+            let filtered = allArticles;
+
+            if (currentCategory === 'bookmarks') {
+                filtered = allArticles.filter(item => bookmarkedIds.has(item.id));
+            } else if (currentCategory === 'space_articles') {
+                filtered = allArticles.filter(item => item.category === 'Spaceflight News');
+            } else if (currentCategory === 'space_blogs') {
+                filtered = allArticles.filter(item => item.category === 'Space Blogs');
+            } else if (currentCategory === 'tech') {
+                filtered = allArticles.filter(item => item.category === 'Technology');
+            } else if (currentCategory === 'science') {
+                filtered = allArticles.filter(item => item.category === 'Science');
+            } else if (currentCategory === 'ai_research') {
+                filtered = allArticles.filter(item => item.category === 'AI & Research');
+            } else if (currentCategory === 'business') {
+                filtered = allArticles.filter(item => item.category === 'Business');
+            } else if (currentCategory === 'crypto') {
+                filtered = allArticles.filter(item => item.category === 'Crypto');
+            } else if (currentCategory === 'forex') {
+                filtered = allArticles.filter(item => item.category === 'Forex');
+            } else if (currentCategory === 'africa') {
+                filtered = allArticles.filter(item => item.category === 'Africa');
+            } else if (currentCategory === 'world') {
+                filtered = allArticles.filter(item => item.category === 'World News');
+            }
+
+            if (selectedSource !== 'all') {
+                filtered = filtered.filter(item => item.news_site === selectedSource);
+            }
+
+            if (searchQuery.trim()) {
+                const q = searchQuery.toLowerCase().trim();
+                filtered = filtered.filter(item => 
+                    item.title.toLowerCase().includes(q) || 
+                    item.summary.toLowerCase().includes(q) ||
+                    item.news_site.toLowerCase().includes(q)
+                );
+            }
+
+            if (currentSort === 'newest') {
+                filtered.sort((a, b) => new Date(b.published_at || 0) - new Date(a.published_at || 0));
+            } else if (currentSort === 'oldest') {
+                filtered.sort((a, b) => new Date(a.published_at || 0) - new Date(b.published_at || 0));
+            } else if (currentSort === 'alphabetical') {
+                filtered.sort((a, b) => a.title.localeCompare(b.title));
+            }
+
+            if (filtered.length === 0) {
+                newsGrid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+
+            if (currentView === 'grid') {
+                renderGridView(filtered);
+            } else {
+                renderListView(filtered);
+            }
+
+            animateCards();
+        }
+
+        function animateCards() {
+            const cards = newsGrid.querySelectorAll('.animate-on-enter');
+            cards.forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(16px)';
+                card.style.animation = `fadeInUp 0.5s ease-out ${i * 0.06}s forwards`;
+            });
+        }
+
+        function renderGridView(articles) {
+            newsGrid.innerHTML = articles.map((item, idx) => {
+                const isSaved = bookmarkedIds.has(item.id);
+                const relTime = formatRelativeTime(item.published_at);
+                
+                return `
+                    <div class="animate-on-enter group bg-white dark:bg-[#111219] border border-slate-200/55 dark:border-slate-900/60 rounded-xl overflow-hidden card-glow flex flex-col justify-between" data-id="${item.id}" style="opacity:0">
+                        <div>
+                            <div class="relative overflow-hidden aspect-video bg-slate-50 dark:bg-slate-950">
+                                <img src="${item.image_url}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=600&q=80';this.onerror=null;">
+                                <div class="absolute inset-0 img-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <button onclick="toggleBookmark(event, '${item.id}')" class="absolute top-2.5 right-2.5 p-1.5 rounded-lg bg-white/90 dark:bg-slate-950/90 text-slate-400 dark:text-slate-500 hover:text-amber-500 dark:hover:text-amber-500 transition-all shadow-sm border border-slate-100/30 dark:border-slate-900/30 hover:shadow-md hover:scale-105 btn-scale">
+                                    <svg class="w-3.5 h-3.5 ${isSaved ? 'fill-amber-500 text-amber-500' : 'currentColor'}" viewBox="0 0 24 24">
+                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" stroke="currentColor" stroke-width="${isSaved ? '0' : '1.5'}"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="p-4 space-y-2">
+                                <div class="flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500 font-medium font-sans">
+                                    <span class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                                        ${item.news_site}
+                                    </span>
+                                    <span class="tabular-nums">${relTime}</span>
+                                </div>
+
+                                <h3 class="text-sm font-serif font-bold text-slate-900 dark:text-white line-clamp-2 leading-snug group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors duration-150">
+                                    ${item.title}
+                                </h3>
+
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-sans">
+                                    ${item.summary}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="px-4 pb-4 pt-1.5 flex gap-2 font-sans">
+                            <button onclick="openModal('${item.id}')" class="flex-1 py-1.5 text-[10px] font-semibold bg-slate-50 hover:bg-slate-100 dark:bg-slate-950/60 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-400 rounded-lg transition-all border border-slate-200/40 dark:border-slate-900 hover:border-slate-300 dark:hover:border-slate-800 btn-scale">
+                                Quick Read
+                            </button>
+                            <a href="${item.url}" target="_blank" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-950 text-[10px] font-semibold rounded-lg transition-all flex items-center justify-center btn-scale">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderListView(articles) {
+            newsGrid.innerHTML = articles.map((item, idx) => {
+                const isSaved = bookmarkedIds.has(item.id);
+                const relTime = formatRelativeTime(item.published_at);
+                
+                return `
+                    <div class="animate-on-enter group bg-white dark:bg-[#111219] border border-slate-200/50 dark:border-slate-900/60 rounded-xl p-3.5 flex items-center justify-between gap-4 card-glow" data-id="${item.id}" style="opacity:0">
+                        <div class="flex items-center space-x-3.5 min-w-0 flex-1">
+                            <div class="w-12 h-12 rounded-lg overflow-hidden bg-slate-50 dark:bg-slate-950 flex-shrink-0 border border-slate-200/20 dark:border-slate-800/20">
+                                <img src="${item.image_url}" alt="" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=600&q=80';this.onerror=null;">
+                            </div>
+
+                            <div class="min-w-0 space-y-0.5">
+                                <div class="flex items-center space-x-2 text-[10px] text-slate-400 dark:text-slate-500 font-sans">
+                                    <span class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">${item.news_site}</span>
+                                    <span>&bull;</span>
+                                    <span class="tabular-nums">${relTime}</span>
+                                    <span>&bull;</span>
+                                    <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-900 rounded text-[9px] text-slate-500 dark:text-slate-400 font-medium">
+                                        ${getCategoryLabel(item.category)}
+                                    </span>
+                                </div>
+
+                                <h3 onclick="openModal('${item.id}')" class="text-xs font-serif font-bold text-slate-900 dark:text-white truncate cursor-pointer group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors leading-snug">
+                                    ${item.title}
+                                </h3>
+
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-xl font-sans">
+                                    ${item.summary}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-1.5 flex-shrink-0">
+                            <button onclick="toggleBookmark(event, '${item.id}')" class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-400 dark:text-slate-500 hover:text-amber-500 transition-colors btn-scale">
+                                <svg class="w-4 h-4 ${isSaved ? 'fill-amber-500 text-amber-500' : 'currentColor'}" viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" stroke="currentColor" stroke-width="${isSaved ? '0' : '1.5'}"/>
+                                </svg>
+                            </button>
+                            
+                            <button onclick="openModal('${item.id}')" class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors btn-scale">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M20.25 3.75v4.5m0-4.5h-4.5m4.5 0L15 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 20.25v-4.5m0 4.5h-4.5m4.5 0L15 15"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function toggleBookmark(e, id) {
+            if (e) e.stopPropagation();
+            const article = allArticles.find(item => item.id === id);
+            if (!article) return;
+
+            const isSaved = bookmarkedIds.has(id);
+            try {
+                if (isSaved) {
+                    const res = await fetch(`/api/favorites/${id}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        bookmarkedIds.delete(id);
+                        showToast("Article removed from bookmarks.");
+                    } else throw new Error();
+                } else {
+                    const res = await fetch('/api/favorites', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(article)
+                    });
+                    if (res.ok) {
+                        bookmarkedIds.add(id);
+                        showToast("Saved to Bookmarks database.");
+                    } else throw new Error();
+                }
+
+                updateFavBadge();
+                renderArticles();
+                if (activeModalArticle && activeModalArticle.id === id) {
+                    updateModalBookmarkState();
+                }
+            } catch (err) {
+                showToast("Database synchronization issue.", "error");
+            }
+        }
+
+        function openModal(id) {
+            const article = allArticles.find(item => item.id === id);
+            if (!article) return;
+
+            activeModalArticle = article;
+            
+            modalImage.src = article.image_url;
+            modalImage.alt = article.title;
+            
+            modalCategory.textContent = getCategoryLabel(article.category);
+            modalSite.textContent = article.news_site;
+
+            const pubDate = new Date(article.published_at);
+            modalDate.textContent = isNaN(pubDate.getTime())
+                ? 'Recently published'
+                : pubDate.toLocaleDateString('en-US', {
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+
+            modalTitle.textContent = article.title;
+            
+            if (article.authors && article.authors.length > 0) {
+                modalAuthorsContainer.classList.remove('hidden');
+                modalAuthors.textContent = article.authors.map(a => a.name).join(', ');
+            } else {
+                modalAuthorsContainer.classList.add('hidden');
+            }
+
+            modalSummary.textContent = article.summary || 'No detailed summary available for this article.';
+            modalBtnVisit.href = article.url;
+
+            updateModalBookmarkState();
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            requestAnimationFrame(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            });
+            
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function updateModalBookmarkState() {
+            if (!activeModalArticle) return;
+            const isSaved = bookmarkedIds.has(activeModalArticle.id);
+            if (isSaved) {
+                modalFavIcon.classList.add('fill-amber-500', 'text-amber-500');
+                modalFavText.textContent = "Bookmarked";
+            } else {
+                modalFavIcon.classList.remove('fill-amber-500', 'text-amber-500');
+                modalFavText.textContent = "Bookmark";
+            }
+        }
+
+        function closeModal() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            }, 250);
+            activeModalArticle = null;
+        }
+
+        function setupScrollListener() {
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        const scrollY = window.scrollY;
+                        if (scrollY > 120) {
+                            header.classList.add('header-shadow-scrolled');
+                            scrollTopBtn.classList.add('visible');
+                        } else {
+                            header.classList.remove('header-shadow-scrolled');
+                            scrollTopBtn.classList.remove('visible');
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        function setupEventListeners() {
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                if (searchQuery.trim().length > 0) {
+                    searchClear.classList.remove('hidden');
+                } else {
+                    searchClear.classList.add('hidden');
+                }
+                renderArticles();
+            });
+
+            searchClear.addEventListener('click', () => {
+                searchInput.value = '';
+                searchQuery = '';
+                searchClear.classList.add('hidden');
+                renderArticles();
+            });
+
+            sourceFilter.addEventListener('change', (e) => {
+                selectedSource = e.target.value;
+                renderArticles();
+            });
+
+            categoryFilters.addEventListener('click', (e) => {
+                const target = e.target.closest('button');
+                if (!target) return;
+
+                document.querySelectorAll('.cat-pill').forEach(btn => {
+                    btn.className = "cat-pill px-3.5 py-2 text-xs font-medium rounded-t-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-b-2 border-transparent flex items-center font-sans transition-colors";
+                });
+
+                target.className = "cat-pill active px-3.5 py-2 text-xs font-semibold rounded-t-lg border-b-2 border-brand-500 text-brand-600 dark:text-brand-400 flex items-center font-sans transition-colors";
+                
+                currentCategory = target.dataset.cat;
+                renderArticles();
+            });
+
+            viewGridBtn.addEventListener('click', () => setView('grid'));
+            viewListBtn.addEventListener('click', () => setView('list'));
+
+            btnFavToggle.addEventListener('click', () => {
+                const favBtn = document.querySelector('[data-cat="bookmarks"]');
+                if (favBtn) favBtn.click();
+            });
+
+            sortSelect.addEventListener('change', (e) => {
+                currentSort = e.target.value;
+                renderArticles();
+            });
+
+            btnRefresh.addEventListener('click', () => {
+                fetchNews(true);
+            });
+
+            btnThemeToggle.addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            modalBtnShare.addEventListener('click', () => {
+                if (!activeModalArticle) return;
+                navigator.clipboard.writeText(activeModalArticle.url).then(() => {
+                    showToast("Article publisher URL copied.");
+                }).catch(() => {
+                    showToast("Failed to copy link.", "error");
+                });
+            });
+
+            modalBtnFav.addEventListener('click', (e) => {
+                if (activeModalArticle) {
+                    toggleBookmark(e, activeModalArticle.id);
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
