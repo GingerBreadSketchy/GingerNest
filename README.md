@@ -112,3 +112,7 @@ Open **http://localhost:5000** in your browser.
 - **Investing.com**
 - **BBC Africa** • **The Guardian Africa**
 - **BBC News** • **The Guardian** • **NPR**
+
+---
+
+[^1]: [![GitHub](https://img.shields.io/badge/GitHub-GingerBreadSketchy-181717?style=flat&logo=github)](https://github.com/GingerBreadSketchy)
