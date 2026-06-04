@@ -1,5 +1,8 @@
 # GingerNest: Consolidated News Dashboard
 
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![GitHub Profile](https://img.shields.io/badge/GitHub-GingerBreadSketchy-181717?style=for-the-badge&logo=github)](https://github.com/GingerBreadSketchy)
+
 GingerNest aggregates and normalizes news from 27+ sources across 10 categories into a sleek, professional web dashboard with persistent bookmarks, real-time search, and full dark/light mode.
 
 ---
@@ -112,7 +115,3 @@ Open **http://localhost:5000** in your browser.
 - **Investing.com**
 - **BBC Africa** • **The Guardian Africa**
 - **BBC News** • **The Guardian** • **NPR**
-
----
-
-[^1]: [![GitHub](https://img.shields.io/badge/GitHub-GingerBreadSketchy-181717?style=flat&logo=github)](https://github.com/GingerBreadSketchy)
